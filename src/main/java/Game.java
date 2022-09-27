@@ -6,6 +6,9 @@ import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
 
+
+
+
 public class Game {
     private final TerminalScreen screen;
     public Game(int  width, int height) throws IOException {
