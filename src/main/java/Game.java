@@ -14,7 +14,7 @@ public class Game {
     private final TerminalScreen screen;
    // private int x = 10;
     //private int y = 10;
-    Hero hero=new Hero(10,10);
+    Hero hero=new Hero(new Position(10,10));
 
     public Game(int width, int height) throws IOException {
         Terminal terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(width, height)).createTerminal();
@@ -46,17 +46,17 @@ public class Game {
         while (play == true) {
             switch (key.getKeyType()) {
                 case ArrowUp:
-                  hero.moveUp();
+                 moveHero(hero.moveUp());
                     break;
                 case ArrowDown:
-                    hero.moveDown();
+                    moveHero(hero.moveDown());
                     break;
                 case ArrowLeft:
-                    hero.moveLeft();
+                    moveHero(hero.moveLeft());
                     break;
 
                 case ArrowRight:
-                    hero.moveRight();
+                   moveHero(hero.moveRight());
                     break;
                 case Character:
                     if (key.getCharacter() == 'q') {
@@ -72,5 +72,8 @@ public class Game {
             System.out.println(key);
             run();
         }
+    }
+    private void moveHero(Position position){
+        hero.setPosition(position);
     }
 }
