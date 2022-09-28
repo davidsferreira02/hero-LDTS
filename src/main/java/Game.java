@@ -1,20 +1,20 @@
 import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextCharacter;
-import com.googlecode.lanterna.input.KeyType;
+
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.KeyStroke;
 
 
-import javax.swing.*;
+
 import java.io.IOException;
 
 
 public class Game {
     private final TerminalScreen screen;
-    private int x = 10;
-    private int y = 10;
+   // private int x = 10;
+    //private int y = 10;
+    Hero hero=new Hero(10,10);
 
     public Game(int width, int height) throws IOException {
         Terminal terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(width, height)).createTerminal();
@@ -28,7 +28,7 @@ public class Game {
 
     private void draw() throws IOException {
         screen.clear();
-        screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+        hero.draw(screen);
         screen.refresh();
     }
 
@@ -46,17 +46,17 @@ public class Game {
         while (play == true) {
             switch (key.getKeyType()) {
                 case ArrowUp:
-                    y--;
+                  hero.moveUp();
                     break;
                 case ArrowDown:
-                    y++;
+                    hero.moveDown();
                     break;
                 case ArrowLeft:
-                    x--;
+                    hero.moveLeft();
                     break;
 
                 case ArrowRight:
-                    x++;
+                    hero.moveRight();
                     break;
                 case Character:
                     if (key.getCharacter() == 'q') {
