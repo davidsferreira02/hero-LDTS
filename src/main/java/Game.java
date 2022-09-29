@@ -1,79 +1,88 @@
 import com.googlecode.lanterna.TerminalSize;
 
+import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.KeyStroke;
 
 
-
 import java.io.IOException;
 
 
 public class Game {
-    private final TerminalScreen screen;
-   // private int x = 10;
-    //private int y = 10;
-    Hero hero=new Hero(new Position(10,10));
+    //Attributes
+    private Hero hero;
+    private Screen screen;
+    private Arena arena;
 
-    public Game(int width, int height) throws IOException {
-        Terminal terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(width, height)).createTerminal();
-        screen = new TerminalScreen(terminal);
-        screen.setCursorPosition(null);   // we don’t need a cursor
-        screen.startScreen();             // screens must be started
-        screen.doResizeIfNecessary();     // resize screen if necessary
-        TerminalSize terminalSize = new TerminalSize(width, height);
-        // DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-    }
+    //Methods
+    public Game(){
+        try{
+            TerminalSize terminalSize = new TerminalSize(40, 20);
+            DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
+            Terminal terminal = terminalFactory.createTerminal();
+            this.screen = new TerminalScreen(terminal);
+            this.screen.setCursorPosition(null); //don't need a cursor
+            this.screen.startScreen(); //start screen
+            this.screen.doResizeIfNecessary(); //resize if needed
 
-    private void draw() throws IOException {
-        screen.clear();
-        hero.draw(screen);
-        screen.refresh();
-    }
-
-    public void run() throws IOException {
-     boolean play=true;
-        while(play) {
-            draw();
-            KeyStroke key = screen.readInput();
-            processKey(key);
+            Position position = new Position(10, 10);
+            this.hero = new Hero(position);
+            this.arena = new Arena(40, 20, hero);
+        }
+        catch (IOException e){
+            e.printStackTrace();
         }
     }
+    public void run() throws IOException{
+        boolean playing = true;
+        while(playing) {
+            draw();
 
-    private void processKey(KeyStroke key) throws IOException {
-        boolean play = true;
-        while (play == true) {
+            KeyStroke key = screen.readInput();
+            processKey(key);
             switch (key.getKeyType()) {
                 case ArrowUp:
-                 moveHero(hero.moveUp());
+                    moveHero(hero.moveUp());
+                    arena.moveHero(hero.moveUp());
                     break;
                 case ArrowDown:
                     moveHero(hero.moveDown());
+                    arena.moveHero(hero.moveDown());
+                    break;
+                case ArrowRight:
+                    moveHero(hero.moveRight());
+                    arena.moveHero(hero.moveRight());
                     break;
                 case ArrowLeft:
                     moveHero(hero.moveLeft());
-                    break;
-
-                case ArrowRight:
-                   moveHero(hero.moveRight());
+                    arena.moveHero(hero.moveLeft());
                     break;
                 case Character:
-                    if (key.getCharacter() == 'q') {
-                        screen.close();
+                    if(key.getCharacter() == 'q'){
+                        this.screen.close();
                     }
-                    play = false;
                     break;
                 case EOF:
-                    play = false;
-                    screen.close();
+                    playing = false;
                     break;
             }
-            System.out.println(key);
-            run();
         }
     }
+
     private void moveHero(Position position){
         hero.setPosition(position);
+    }
+
+    private void processKey(KeyStroke key) {
+        arena.processKey(key);
+
+    }
+
+    private void draw() throws IOException{
+        this.screen.clear();
+        arena.draw(screen);
+        this.screen.refresh();
     }
 }
