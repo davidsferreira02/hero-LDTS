@@ -37,18 +37,12 @@ public class Arena {
          if (position.getY() < 0 || position.getY() >= height) {
             return false;
         }
-        System.out.println("#############");
          for(Wall wall:walls){
-             if(wall.getWallX()==position.getX() && wall.getWallY()== position.getY()){
+             if(wall.getPosition().equals(position)){
                  return false;
              }
-
-             System.out.println("heroX " + position.getX());
-             System.out.println("heroY " + position.getY());
-             System.out.println("wallX " + wall.getWallX());
-             System.out.println("WallY " + wall.getWallY());
          }
-        System.out.println("#############");
+
         return true;
     }
 
