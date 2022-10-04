@@ -5,6 +5,16 @@ public abstract class Element {
     Element(int x,int y){
         this.position=new Position(x,y);
     }
+    public int getX(){
+        return position.getX();
+    }
+    public int getY(){
+        return position.getY();
+    }
 
-abstract public void draw(TextGraphics graphics);
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    abstract public void draw(TextGraphics graphics);
 }
