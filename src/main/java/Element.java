@@ -1,9 +1,9 @@
 import com.googlecode.lanterna.graphics.TextGraphics;
 
 public abstract class Element {
-    private Position position;
-    Element(Position position){
-        this.position=position;
+    protected Position position;
+    Element(int x,int y){
+        this.position=new Position(x,y);
     }
 
 abstract public void draw(TextGraphics graphics);

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Wall extends Element {
-    private Position position;
-public Wall(Position position){
-    super(position);
+
+public Wall(int x,int y){
+    super(x,y);
 }
 public int getWallX(){
   return position.getX();

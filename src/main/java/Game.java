@@ -29,8 +29,8 @@ public class Game {
             this.screen.startScreen(); //start screen
             this.screen.doResizeIfNecessary(); //resize if needed
 
-            Position position = new Position(10, 10);
-            this.hero = new Hero(position);
+
+            this.hero = new Hero(10,10);
             this.arena = new Arena(40, 20, hero);
         } catch (IOException e) {
             e.printStackTrace();

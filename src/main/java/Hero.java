@@ -10,10 +10,10 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 
 public class Hero extends Element {
 
-    private Position position;
 
-    Hero(Position position){
-        super(position);
+
+    Hero(int x,int y){
+        super(x,y);
     }
 
 
