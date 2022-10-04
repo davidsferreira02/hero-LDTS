@@ -6,10 +6,10 @@ import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Wall {
+public class Wall extends Element {
     private Position position;
 public Wall(Position position){
-    this.position=position;
+    super(position);
 }
 public int getWallX(){
   return position.getX();

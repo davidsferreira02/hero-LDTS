@@ -8,12 +8,12 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 
 
 
-public class Hero {
+public class Hero extends Element {
 
     private Position position;
 
     Hero(Position position){
-        this.position=position;
+        super(position);
     }
 
 
