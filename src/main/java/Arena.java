@@ -15,8 +15,8 @@ public class Arena {
     private int height;
     private Hero hero;
     private List<Wall> walls;
-
     private List<Coin> coins;
+    private List<Monster>monsters;
 
     public Arena(int width, int height, Hero hero) {
         ;
@@ -25,17 +25,51 @@ public class Arena {
         this.hero = hero;
         this.walls = createWalls();
         this.coins=createCoins();
+        this.monsters=createMonsters();
     }
 
     public void moveHero(Position position) {
-        if (canHeroMove(position))
+        if (canMove(position))
             hero.setPosition(position);
         retrieveCoins();
     }
+    private void setMonsterPosition(Position position,Monster monsters){
+        if(canMove(position)){
+            monsters.setPosition(position);
+        }
+    }
+
+   public void moveMonsters(){
+       Random random = new Random();
+       for(Monster monster : monsters){
+           switch (random.nextInt(4)){
+               case 0:
+                   setMonsterPosition(monster.moveDown(), monster);
+                   break;
+               case 1:
+                   setMonsterPosition(monster.moveUp(), monster);
+                   break;
+               case 2:
+                   setMonsterPosition(monster.moveRight(), monster);
+                   break;
+               case 3:
+                   setMonsterPosition(monster.moveLeft(), monster);
+                   break;
+           }
+       }
+
+   }
+    public boolean verifyMonsterCollisions(){
+        for(Monster monster:monsters){
+            if(monster.getPosition().equals(hero.getPosition())){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
-
-    private boolean canHeroMove(Position position) {
+    private boolean canMove(Position position) {
         if (position.getX() <0 || position.getX() >= width) {
             return false;
         }
@@ -102,6 +136,13 @@ public class Arena {
             coins.add(new Coin(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
         return coins;
     }
+    private List<Monster> createMonsters(){
+        Random random = new Random();
+        ArrayList<Monster> monsters = new ArrayList<>();
+        for (int i = 0; i < 5; i++)
+            monsters.add(new Monster(random.nextInt(width - 2) + 1, random.nextInt(height - 2) + 1));
+        return monsters;
+    }
 
     public void draw(TextGraphics graphics) {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
@@ -112,6 +153,9 @@ public class Arena {
         }
         for(Coin coin:coins){
             coin.draw(graphics);
+        }
+        for(Monster monster:monsters){
+            monster.draw(graphics);
         }
 
     }

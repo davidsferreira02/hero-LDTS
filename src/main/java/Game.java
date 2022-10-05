@@ -30,7 +30,7 @@ public class Game {
             this.screen.doResizeIfNecessary(); //resize if needed
 
 
-            this.hero = new Hero(10,10);
+            this.hero = new Hero(10, 10);
             this.arena = new Arena(40, 20, hero);
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,9 +42,19 @@ public class Game {
         boolean playing = true;
         while (playing) {
             draw();
+            arena.moveMonsters();
             KeyStroke key = screen.readInput();
             if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') {
                 screen.close();
+                playing = false;
+            }
+            if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'Q') {
+                screen.close();
+                playing = false;
+            }
+            if (arena.verifyMonsterCollisions()) {
+                screen.close();
+                playing = false;
             }
             if (key.getKeyType() == KeyType.EOF) {
                 playing = false;
