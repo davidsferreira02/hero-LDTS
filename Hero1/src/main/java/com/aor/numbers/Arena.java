@@ -1,4 +1,6 @@
-<import com.googlecode.lanterna.*;
+package com.aor.numbers;
+
+import com.googlecode.lanterna.*;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
@@ -33,7 +35,7 @@ public class Arena {
             hero.setPosition(position);
         retrieveCoins();
     }
-    private void setMonsterPosition(Position position,Monster monsters){
+    private void setMonsterPosition(Position position, Monster monsters){
         if(canMove(position)){
             monsters.setPosition(position);
         }
